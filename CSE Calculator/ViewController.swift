@@ -6,19 +6,73 @@
 //  Copyright © 2018 Brady Wright. All rights reserved.
 //
 
+/*MARK: Calculation Algorithm
+ 1.  Calculate BMR (Basal Metabolic Rate)
+        Female BMR = 655 + (4.35 * Weight in LBS) + (1.8 * Height in CM) - (4.7 * Age in YRS)
+        Male BMR = 66 + (6.23 * Weight in LBS) + (5 * Height in CM) - (6.8 * Age in YRS)
+        ^^^You have to calculate the numbers in paraentheses first^^^
+ 2.  Calculate TDEE (Total Daily Energy Expenditure)
+        TDEE = BMR * Activity Factor
+            Little to None = 1.2 * BMR
+            Light (1-2 days/week) = 1.375 * BMR
+            Active (3-5 days/week) = 1.55 * BMR
+            Very Active (6-7 days/week) = 1.725 * BMR
+            Heavy (2x/day) = 1.9 * BMR
+ 3.  Calculate and Display Daily Calorie Target Based on Goals
+        Deficit (10-15% below) = TDEE - (TDEE * .125)
+        Deficit (20-25% below) = TDEE - (TDEE * .225)
+        Deficit (30-35% below) = TDEE - (TDEE * .325)
+        Deficit (40%+ below) = TDEE - (TDEE * .4)
+        Maintain Current Weight = TDEE
+        Surplus (10-15% above) = TDEE + (TDEE * .125)
+        Surplus (20-25% above) = TDEE + (TDEE * .225)
+        Surplus (30-35% above) = TDEE + (TDEE * .325)
+        Surplus (40%+) = TDEE + (TDEE * .4)
+ 4.  Display Servings Suggestions Based on Calorie Target
+        if 1250-1499 Calories:
+            3 Meals / 1 Snack
+            3 Meals / 2 Dessert Bites
+        if 1500-1749 Calories:
+            3 Meals / 2 Snacks
+            3 Meals / 1 Snack / 2 Desserts
+        if 1750-1999 Calories:
+            3 Meals / 3 Snacks
+            3 Meals / 3 Snacks / 2 Desserts
+        if 2000-2249 Calories:
+            3 Meals / 4 Snacks
+            3 Meals / 3 Snacks / 1 Dessert
+            4 Meals / 2 Snack / 1 Dessert
+        if 2250-2499 Calories:
+            4 Meals / 3 Snacks / 1 Dessert
+            3 Meals / 4 Snacks / 2 Desserts
+            3 Meals / 5 Snacks
+        if 2500-2749 Calories:
+            4 Meals / 4 Snacks / 1 Dessert
+            5 Meals / 3 Snacks
+            5 Meals / 2 Snacks / 2 Desserts
+        if 2750-2999 Calories:
+            5 Meals / 3 Snacks / 1 Dessert
+            6 Meals / 2 Snacks / 2 Desserts
+            6 Meals / 3 Snacks
+        if 3000+ Calories:
+            5 Meals / 5 Snacks / 1 Dessert
+            6 Meals / 4 Snacks
+            6 Meals / 3 Snacks / 2 Desserts
+ */
+
 import UIKit
 
-class ViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class ViewController: UIViewController, UITextFieldDelegate {
     
     //MARK: Properties
     @IBOutlet weak var uiView: UIView!
     @IBOutlet weak var maleFemale: UISegmentedControl!
     @IBOutlet weak var ageTextField: UITextField!
-    @IBOutlet weak var weightTextField: UITextField!
-    @IBOutlet weak var activityPicker: UIPickerView!
     @IBOutlet weak var heightTextField: UITextField!
+    @IBOutlet weak var weightTextField: UITextField!
     @IBOutlet weak var activityLevelTextField: UITextField!
     @IBOutlet weak var goalTextField: UITextField!
+    @IBOutlet weak var result: UILabel!
     
     
     //MARK: Actions
@@ -31,15 +85,55 @@ class ViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegat
     //MARK: Declarations
     let height = ["4 feet", "4 feet 1 inch", "4 feet 2 inches", "4 feet 3 inches", "4 feet 4 inches", "4 feet 5 inches", "4 feet 6 inches", "4 feet 7 inches", "4 feet 8 inches", "4 feet 9 inches", "4 feet 10 inches", "4 feet 11 inches", "5 feet", "5 feet 1 inch", "5 feet 2 inches", "5 feet 3 inches", "5 feet 4 inches", "5 feet 5 inches", "5 feet 6 inches", "5 feet 7 inches", "5 feet 8 inches", "5 feet 9 inches", "5 feet 10 inches", "5 feet 11 inches", "6 feet", "6 feet 1 inch", "6 feet 2 inches", "6 feet 3 inches", "6 feet 4 inches", "6 feet 5 inches", "6 feet 6 inches", "6 feet 7 inches", "6 feet 8 inches", "6 feet 9 inches", "6 feet 10 inches", "6 feet 11 inches", "7 feet"]
     
+        /*MARK: Height Conversions (if needed)
+        1 FT = 30.48 CM
+        1 IN = 2.54 CM
+     
+        4 FT = 121.92 CM
+        4 FT 1 IN = 124.46 CM
+        4 FT 2 IN = 127 CM
+        4 FT 3 IN = 129.54 CM
+        4 FT 4 IN = 132.08 CM
+        4 FT 5 IN = 134.62 CM
+        4 FT 6 IN = 137.16 CM
+        4 FT 7 IN = 139.7 CM
+        4 FT 8 IN = 142.24 CM
+        4 FT 9 IN = 144.78 CM
+        4 FT 10 IN = 147.32 CM
+        4 FT 11 IN = 149.86 CM
+        ETC, ETC, ETC...
+        */
+    
     let activity = ["Little to None", "Light (1-2 days/week)", "Active (3-5 days/week)", "Very Active (6-7 days/week)", "Heavy (2x/day)"]
     
-    let goal = ["Deficit (10-15% below)", "Deficit (20-25% below)", "deficit (30-35% below)", "deficit (40%+ below)", "Maintain Current Weight", "Surplus (10-15% above)", "Surplus (20-25% above)", "Surplus (30-35% above)", "Surplus (40%+)"]
+        /*MARK: Activity Conversions
+        Little to None = 1.2
+        Light (1-2 days/week) = 1.375
+        Active (3-5 days/week) = 1.55
+        Very Active (6-7 days/week) = 1.725
+        Heavy (2x/day) = 1.9
+        */
+    
+    let goal = ["Deficit (10-15% below)", "Deficit (20-25% below)", "Deficit (30-35% below)", "Deficit (40%+ below)", "Maintain Current Weight", "Surplus (10-15% above)", "Surplus (20-25% above)", "Surplus (30-35% above)", "Surplus (40%+)"]
     
     var selectedHeight: String?
     var selectedActivity: String?
     var selectedGoal: String?
     
-
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        ageTextField.delegate = self
+        weightTextField.delegate = self
+        createHeightPicker()
+        createToolbar()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
+    
     //MARK: Touch Screen to Exit
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
@@ -61,7 +155,46 @@ class ViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegat
         heightPicker.delegate = self
         
         heightTextField.inputView = heightPicker
+        
+        //Customizations
+        heightPicker.backgroundColor = .white
     }
+    
+    
+    /*MARK: Activity Picker
+     func createActivityPicker() {
+     let activityPicker = UIPickerView()
+     activityPicker.delegate = self
+     
+     activityLevelTextField.inputView = activityPicker
+     activityPicker.backgroundColor = .white
+     }
+     */
+    
+    
+    func createToolbar() {
+        
+        let toolBar = UIToolbar()
+        toolBar.sizeToFit()
+        
+        //Customizations
+        toolBar.barTintColor = .black
+        toolBar.tintColor = .white
+        
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(ViewController.dismissKeyboard))
+        
+        toolBar.setItems([doneButton], animated: false)
+        toolBar.isUserInteractionEnabled = true
+        
+        heightTextField.inputAccessoryView = toolBar
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+}
+
+extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -79,18 +212,5 @@ class ViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegat
         
         selectedHeight = height[row]
         heightTextField.text = selectedHeight
-    }
-    
-
-    //MARK: Overrides
-    override func viewDidLoad() {
-        ageTextField.delegate = self
-        weightTextField.delegate = self
-        createHeightPicker()
-        super.viewDidLoad()
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
 }

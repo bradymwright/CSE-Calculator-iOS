@@ -68,22 +68,96 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var uiView: UIView!
     @IBOutlet weak var maleFemale: UISegmentedControl!
     @IBOutlet weak var ageTextField: UITextField!
-    @IBOutlet weak var heightTextField: UITextField!
+    @IBOutlet weak var heightTextField: HeightTextField!
     @IBOutlet weak var weightTextField: UITextField!
+<<<<<<< HEAD
     @IBOutlet weak var activityLevelTextField: UITextField!
     @IBOutlet weak var goalTextField: UITextField!
-    @IBOutlet weak var result: UILabel!
     
+=======
+    @IBOutlet weak var activityLevelTextField: ActivityTextField!
+    @IBOutlet weak var goalTextField: GoalTextField!
+    @IBOutlet weak var result: UILabel!
+  @IBOutlet weak var calculationView: UIView!
+  
+>>>>>>> da3a428601c2aadf4c9b61569e909e5329132345
     
     //MARK: Actions
     @IBAction func maleFemalePressed(_ sender: UISegmentedControl) {
     }
-    @IBAction func calculatePressed(_ sender: UIButton) {
+  @IBAction func calculatePressed(_ sender: Any) {
+    if selectedHeight == nil {return;}
+    if selectedGoal == nil {return;}
+    if selectedActivity == nil {return;}
+    if weightTextField.text == nil || weightTextField.text?.count==0 {return;}
+    if ageTextField.text == nil  || ageTextField.text?.count==0{return;}
+
+    //use these numbers for daily target view
+    var heightCM = 2.54 * Float(48+height.index(of: selectedHeight!)!)
+    var activityFactor = 1.2 + (0.175 * Float(activity.index(of: selectedActivity!)!))
+    var bmr:Float = 0.0
+    if maleFemale.selectedSegmentIndex == 0 {//male
+      //Male BMR = 66 + (6.23 * Weight in LBS) + (5 * Height in CM) - (6.8 * Age in YRS)
+      
+      bmr = 66.0 +
+        (6.23 * Float(weightTextField.text!)!) +
+        (5.0 * heightCM) -
+        (6.8 * Float(ageTextField.text!)!)
+    }else{//female
+      //Female BMR = 655 + (4.35 * Weight in LBS) + (1.8 * Height in CM) - (4.7 * Age in YRS)
+        bmr = 655.0 +
+          (4.35 * Float(weightTextField.text!)!) +
+          (1.8 * heightCM) -
+          (4.7 * Float(ageTextField.text!)!)
     }
+    //TDEE = BMR * Activity Factor
+    var tdee = bmr*activityFactor
     
+    var goalIndex = goal.index(of:selectedGoal!)!
+    var targetFactor:Float = 0.0
+    switch(goalIndex){
+    case 0:
+      targetFactor = -0.125
+      break
+    case 1:
+      targetFactor = -0.225
+      break
+    case 2:
+      targetFactor = -0.325
+      break
+    case 3:
+      targetFactor = -0.4
+      break
+    case 4:
+      targetFactor = 0.0
+      break
+    case 5:
+      targetFactor = 0.125
+      break
+    case 6:
+      targetFactor = 0.225
+      break
+    case 7:
+      targetFactor = 0.325
+      break
+    case 8:
+      targetFactor = 0.4
+      break
+    default:
+      targetFactor = 0.0
+      break
+    }
+    var dailyCalorieTarget:Float = tdee + (tdee*targetFactor)
+    
+    calculationView.isHidden = false;
+  }
+  @IBAction func resetPressed(_ sender: Any) {
+    calculationView.isHidden = true;
+  }
+  
     
     //MARK: Declarations
-    let height = ["4 feet", "4 feet 1 inch", "4 feet 2 inches", "4 feet 3 inches", "4 feet 4 inches", "4 feet 5 inches", "4 feet 6 inches", "4 feet 7 inches", "4 feet 8 inches", "4 feet 9 inches", "4 feet 10 inches", "4 feet 11 inches", "5 feet", "5 feet 1 inch", "5 feet 2 inches", "5 feet 3 inches", "5 feet 4 inches", "5 feet 5 inches", "5 feet 6 inches", "5 feet 7 inches", "5 feet 8 inches", "5 feet 9 inches", "5 feet 10 inches", "5 feet 11 inches", "6 feet", "6 feet 1 inch", "6 feet 2 inches", "6 feet 3 inches", "6 feet 4 inches", "6 feet 5 inches", "6 feet 6 inches", "6 feet 7 inches", "6 feet 8 inches", "6 feet 9 inches", "6 feet 10 inches", "6 feet 11 inches", "7 feet"]
+    let height = ["4'", "4'1\"", "4'2\"", "4 feet 3 inches", "4 feet 4 inches", "4 feet 5 inches", "4 feet 6 inches", "4 feet 7 inches", "4 feet 8 inches", "4 feet 9 inches", "4 feet 10 inches", "4 feet 11 inches", "5 feet", "5 feet 1 inch", "5 feet 2 inches", "5 feet 3 inches", "5 feet 4 inches", "5 feet 5 inches", "5 feet 6 inches", "5 feet 7 inches", "5 feet 8 inches", "5 feet 9 inches", "5 feet 10 inches", "5 feet 11 inches", "6 feet", "6 feet 1 inch", "6 feet 2 inches", "6 feet 3 inches", "6 feet 4 inches", "6 feet 5 inches", "6 feet 6 inches", "6 feet 7 inches", "6 feet 8 inches", "6 feet 9 inches", "6 feet 10 inches", "6 feet 11 inches", "7 feet"]
     
         /*MARK: Height Conversions (if needed)
         1 FT = 30.48 CM
@@ -116,60 +190,95 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     let goal = ["Deficit (10-15% below)", "Deficit (20-25% below)", "Deficit (30-35% below)", "Deficit (40%+ below)", "Maintain Current Weight", "Surplus (10-15% above)", "Surplus (20-25% above)", "Surplus (30-35% above)", "Surplus (40%+)"]
     
+        /*MARK: Goal Conversions (Split in between the percentages)
+        Deficit (10-15% below) = .125
+        Deficit (20-25% below) = .225
+        Deficit (30-35% below) = .325
+        Deficit (40%+ below) = .4
+        Maintain Current Weight = 0
+        Surplus (10-15% above) = .125
+        Surplus (20-25% above) = .225
+        Surplus (30-35% above) = .325
+        Surplus (40%+) = .4
+        */
+    
     var selectedHeight: String?
     var selectedActivity: String?
     var selectedGoal: String?
     
     
+    //MARK: Overrides
     override func viewDidLoad() {
         super.viewDidLoad()
         ageTextField.delegate = self
         weightTextField.delegate = self
         createHeightPicker()
+        createActivityPicker()
+        createGoalPicker()
         createToolbar()
-    }
+  }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
+<<<<<<< HEAD
     
+        //MARK: Touch Screen to Exit
+        override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+            self.view.endEditing(true)
+        }
+=======
     //MARK: Touch Screen to Exit
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
+>>>>>>> da3a428601c2aadf4c9b61569e909e5329132345
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == ageTextField {
-            weightTextField.becomeFirstResponder()
-        } else if textField == weightTextField {
-            textField.resignFirstResponder()
+        func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+            if textField == ageTextField {
+                weightTextField.becomeFirstResponder()
+            } else if textField == weightTextField {
+                textField.resignFirstResponder()
+            }
+            return true
         }
-        return true
-    }
     
     
     //MARK: Height Picker
     func createHeightPicker() {
         let heightPicker = UIPickerView()
-        heightPicker.delegate = self
+        heightPicker.delegate = heightTextField
         
         heightTextField.inputView = heightPicker
+        heightTextField.parent = self
         
         //Customizations
         heightPicker.backgroundColor = .white
     }
     
     
-    /*MARK: Activity Picker
+    //MARK: Activity Picker
      func createActivityPicker() {
-     let activityPicker = UIPickerView()
-     activityPicker.delegate = self
+        let activityPicker = UIPickerView()
+        activityPicker.delegate = activityLevelTextField
      
-     activityLevelTextField.inputView = activityPicker
-     activityPicker.backgroundColor = .white
+        activityLevelTextField.inputView = activityPicker
+        activityLevelTextField.parent = self
+      
+        activityPicker.backgroundColor = .white
      }
-     */
+  
+  func createGoalPicker() {
+    let goalPicker = UIPickerView()
+    goalPicker.delegate = goalTextField
+    
+    goalTextField.inputView = goalPicker
+    goalTextField.parent = self
+    
+    goalPicker.backgroundColor = .white
+  }
+     
     
     
     func createToolbar() {
@@ -181,12 +290,16 @@ class ViewController: UIViewController, UITextFieldDelegate {
         toolBar.barTintColor = .black
         toolBar.tintColor = .white
         
-        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(ViewController.dismissKeyboard))
+        let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(ViewController.dismissKeyboard))
         
-        toolBar.setItems([doneButton], animated: false)
+        toolBar.setItems([UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil), doneButton], animated: false)
         toolBar.isUserInteractionEnabled = true
         
         heightTextField.inputAccessoryView = toolBar
+        activityLevelTextField.inputAccessoryView = toolBar
+        goalTextField.inputAccessoryView = toolBar
+        ageTextField.inputAccessoryView = toolBar
+        weightTextField.inputAccessoryView = toolBar
     }
     
     @objc func dismissKeyboard() {
@@ -194,23 +307,62 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
 }
 
-extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return height.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return height[row]
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        
-        selectedHeight = height[row]
-        heightTextField.text = selectedHeight
-    }
+class HeightTextField : UITextField, UIPickerViewDelegate, UIPickerViewDataSource{
+  var parent: ViewController?
+  func numberOfComponents(in pickerView: UIPickerView) -> Int {
+    return 1
+  }
+  
+  func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    return parent!.height.count
+  }
+  
+  func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    return parent!.height[row]
+  }
+  
+  func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    parent?.selectedHeight = parent!.height[row]
+    text = parent?.selectedHeight
+  }
+}
+
+class ActivityTextField : UITextField, UIPickerViewDelegate, UIPickerViewDataSource{
+  var parent: ViewController?
+  func numberOfComponents(in pickerView: UIPickerView) -> Int {
+    return 1
+  }
+  
+  func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    return parent!.activity.count
+  }
+  
+  func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    return parent!.activity[row]
+  }
+  
+  func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    parent?.selectedActivity = parent!.activity[row]
+    text = parent?.selectedActivity
+  }
+}
+
+class GoalTextField : UITextField, UIPickerViewDelegate, UIPickerViewDataSource{
+  var parent: ViewController?
+  func numberOfComponents(in pickerView: UIPickerView) -> Int {
+    return 1
+  }
+  
+  func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    return parent!.goal.count
+  }
+  
+  func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    return parent!.goal[row]
+  }
+  
+  func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    parent?.selectedGoal = parent!.goal[row]
+    text = parent?.selectedGoal
+  }
 }

@@ -70,18 +70,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var ageTextField: UITextField!
     @IBOutlet weak var heightTextField: HeightTextField!
     @IBOutlet weak var weightTextField: UITextField!
-<<<<<<< HEAD
-    @IBOutlet weak var activityLevelTextField: UITextField!
-    @IBOutlet weak var goalTextField: UITextField!
-    
-=======
     @IBOutlet weak var activityLevelTextField: ActivityTextField!
     @IBOutlet weak var goalTextField: GoalTextField!
     @IBOutlet weak var result: UILabel!
-  @IBOutlet weak var calculationView: UIView!
   
->>>>>>> da3a428601c2aadf4c9b61569e909e5329132345
-    
+  
     //MARK: Actions
     @IBAction func maleFemalePressed(_ sender: UISegmentedControl) {
     }
@@ -147,14 +140,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
       targetFactor = 0.0
       break
     }
-    var dailyCalorieTarget:Float = tdee + (tdee*targetFactor)
-    
-    calculationView.isHidden = false;
+    dailyCalorieTarget = tdee + (tdee*targetFactor)
   }
-  @IBAction func resetPressed(_ sender: Any) {
-    calculationView.isHidden = true;
-  }
-  
     
     //MARK: Declarations
     let height = ["4'", "4'1\"", "4'2\"", "4 feet 3 inches", "4 feet 4 inches", "4 feet 5 inches", "4 feet 6 inches", "4 feet 7 inches", "4 feet 8 inches", "4 feet 9 inches", "4 feet 10 inches", "4 feet 11 inches", "5 feet", "5 feet 1 inch", "5 feet 2 inches", "5 feet 3 inches", "5 feet 4 inches", "5 feet 5 inches", "5 feet 6 inches", "5 feet 7 inches", "5 feet 8 inches", "5 feet 9 inches", "5 feet 10 inches", "5 feet 11 inches", "6 feet", "6 feet 1 inch", "6 feet 2 inches", "6 feet 3 inches", "6 feet 4 inches", "6 feet 5 inches", "6 feet 6 inches", "6 feet 7 inches", "6 feet 8 inches", "6 feet 9 inches", "6 feet 10 inches", "6 feet 11 inches", "7 feet"]
@@ -205,6 +192,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     var selectedHeight: String?
     var selectedActivity: String?
     var selectedGoal: String?
+    var dailyCalorieTarget:Float?
     
     
     //MARK: Overrides
@@ -222,19 +210,12 @@ class ViewController: UIViewController, UITextFieldDelegate {
         super.didReceiveMemoryWarning()
     }
     
-<<<<<<< HEAD
-    
+  
         //MARK: Touch Screen to Exit
         override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
             self.view.endEditing(true)
         }
-=======
-    //MARK: Touch Screen to Exit
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
->>>>>>> da3a428601c2aadf4c9b61569e909e5329132345
-    
+  
         func textFieldShouldReturn(_ textField: UITextField) -> Bool {
             if textField == ageTextField {
                 weightTextField.becomeFirstResponder()

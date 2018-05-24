@@ -73,13 +73,13 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var activityLevelTextField: ActivityTextField!
     @IBOutlet weak var goalTextField: GoalTextField!
     @IBOutlet weak var result: UILabel!
-  @IBOutlet weak var calculationView: UIView!
+    @IBOutlet weak var calculationView: UIView!
   
     
     //MARK: Actions
     @IBAction func maleFemalePressed(_ sender: UISegmentedControl) {
     }
-  @IBAction func calculatePressed(_ sender: Any) {
+    @IBAction func calculatePressed(_ sender: Any) {
     if selectedHeight == nil {return;}
     if selectedGoal == nil {return;}
     if selectedActivity == nil {return;}
@@ -87,8 +87,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
     if ageTextField.text == nil  || ageTextField.text?.count==0{return;}
 
     //use these numbers for daily target view
-    var heightCM = 2.54 * Float(48+height.index(of: selectedHeight!)!)
-    var activityFactor = 1.2 + (0.175 * Float(activity.index(of: selectedActivity!)!))
+    let heightCM = 2.54 * Float(48+height.index(of: selectedHeight!)!)
+    let activityFactor = 1.2 + (0.175 * Float(activity.index(of: selectedActivity!)!))
     var bmr:Float = 0.0
     if maleFemale.selectedSegmentIndex == 0 {//male
       //Male BMR = 66 + (6.23 * Weight in LBS) + (5 * Height in CM) - (6.8 * Age in YRS)
@@ -105,9 +105,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
           (4.7 * Float(ageTextField.text!)!)
     }
     //TDEE = BMR * Activity Factor
-    var tdee = bmr*activityFactor
+    let tdee = bmr*activityFactor
     
-    var goalIndex = goal.index(of:selectedGoal!)!
+    let goalIndex = goal.index(of:selectedGoal!)!
     var targetFactor:Float = 0.0
     switch(goalIndex){
     case 0:
@@ -143,15 +143,15 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     var dailyCalorieTarget:Float = tdee + (tdee*targetFactor)
     
-    calculationView.isHidden = false;
+    //calculationView.isHidden = false;
   }
-  @IBAction func resetPressed(_ sender: Any) {
-    calculationView.isHidden = true;
+    @IBAction func resetPressed(_ sender: Any) {
+        calculationView.isHidden = true;
   }
   
     
     //MARK: Declarations
-    let height = ["4'", "4'1\"", "4'2\"", "4 feet 3 inches", "4 feet 4 inches", "4 feet 5 inches", "4 feet 6 inches", "4 feet 7 inches", "4 feet 8 inches", "4 feet 9 inches", "4 feet 10 inches", "4 feet 11 inches", "5 feet", "5 feet 1 inch", "5 feet 2 inches", "5 feet 3 inches", "5 feet 4 inches", "5 feet 5 inches", "5 feet 6 inches", "5 feet 7 inches", "5 feet 8 inches", "5 feet 9 inches", "5 feet 10 inches", "5 feet 11 inches", "6 feet", "6 feet 1 inch", "6 feet 2 inches", "6 feet 3 inches", "6 feet 4 inches", "6 feet 5 inches", "6 feet 6 inches", "6 feet 7 inches", "6 feet 8 inches", "6 feet 9 inches", "6 feet 10 inches", "6 feet 11 inches", "7 feet"]
+    let height = ["4' 0\"", "4' 1\"", "4' 2\"", "4' 3\"", "4' 4\"", "4' 5\"", "4' 6\"", "4' 7\"", "4' 8\"", "4' 9\"", "4' 10\"", "4' 11\"", "5' 0\"", "5' 1\"", "5' 2\"", "5' 3\"", "5' 4\"", "5' 5\"", "5' 6\"", "5' 7\"", "5' 8\"", "5' 9\"", "5' 10\"", "5' 11\"", "6' 0\"", "6' 1\"", "6' 2\"", "6' 3\"", "6' 4\"", "6' 5\"", "6' 6\"", "6' 7\"", "6' 8\"", "6' 9\"", "6' 10\"", "6' 11\"", "7' 0\""]
     
         /*MARK: Height Conversions (if needed)
         1 FT = 30.48 CM
@@ -271,8 +271,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
         heightTextField.inputAccessoryView = toolBar
         activityLevelTextField.inputAccessoryView = toolBar
         goalTextField.inputAccessoryView = toolBar
-        ageTextField.inputAccessoryView = toolBar
-        weightTextField.inputAccessoryView = toolBar
+        //ageTextField.inputAccessoryView = toolBar
+        //weightTextField.inputAccessoryView = toolBar
     }
     
     @objc func dismissKeyboard() {

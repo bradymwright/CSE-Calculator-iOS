@@ -31,7 +31,7 @@
  4.  Display Servings Suggestions Based on Calorie Target
         if 1250-1499 Calories:
             3 Meals / 1 Snack
-            3 Meals / 2 Dessert Bites
+            3 Meals / 2 Desserts
         if 1500-1749 Calories:
             3 Meals / 2 Snacks
             3 Meals / 1 Snack / 2 Desserts
@@ -73,8 +73,13 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var activityLevelTextField: ActivityTextField!
     @IBOutlet weak var goalTextField: GoalTextField!
     @IBOutlet weak var result: UILabel!
-    @IBOutlet weak var calculationView: UIView!
-  
+    @IBOutlet weak var resultsView: UIView!
+    @IBOutlet weak var servingSuggestion1: UILabel!
+    @IBOutlet weak var servingSuggestion2: UILabel!
+    @IBOutlet weak var servingSuggestion3: UILabel!
+    @IBOutlet weak var blackground: UIView!
+    @IBOutlet weak var hoverView: UIView!
+    
     
     //MARK: Actions
     @IBAction func maleFemalePressed(_ sender: UISegmentedControl) {
@@ -141,12 +146,16 @@ class ViewController: UIViewController, UITextFieldDelegate {
       targetFactor = 0.0
       break
     }
-    var dailyCalorieTarget:Float = tdee + (tdee*targetFactor)
-    
-    //calculationView.isHidden = false;
+        let dailyCalorieTarget:Float = tdee + (tdee*targetFactor)
+        
+    resultsView.isHidden = false;
+    blackground.isHidden = false;
+    hoverView.isHidden = false;
   }
     @IBAction func resetPressed(_ sender: Any) {
-        calculationView.isHidden = true;
+        resultsView.isHidden = true;
+        blackground.isHidden = true;
+        hoverView.isHidden = true;
   }
   
     

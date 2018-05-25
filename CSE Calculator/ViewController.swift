@@ -158,34 +158,37 @@ class ViewController: UIViewController, UITextFieldDelegate {
     result.text = String(dailyCalorieTarget)
     
     if dailyCalorieTarget < 1499 {
-      servingSuggestion1.text = "3 Meals / 1 Snack"
-      servingSuggestion2.text = "3 Meals / 2 Desserts"
+      servingSuggestion1.text = "3 meals / 1 snack"
+      servingSuggestion2.text = "3 meals / 2 desserts"
+        servingSuggestion3.text = ""
     } else if dailyCalorieTarget < 1749 {
-      servingSuggestion1.text = "3 Meals / 2 Snacks"
-      servingSuggestion2.text = "3 Meals / 1 Snack / 2 Desserts"
+      servingSuggestion1.text = "3 meals / 2 snacks"
+      servingSuggestion2.text = "3 meals / 1 snack / 2 desserts"
+        servingSuggestion3.text = ""
     } else if dailyCalorieTarget < 1999 {
-      servingSuggestion1.text = "3 Meals / 3 Snacks"
-      servingSuggestion2.text = "3 Meals / 3 Snacks / 2 Desserts"
+      servingSuggestion1.text = "3 meals / 3 snacks"
+      servingSuggestion2.text = "3 meals / 2 snacks / 2 desserts"
+        servingSuggestion3.text = ""
     } else if dailyCalorieTarget < 2249 {
-      servingSuggestion1.text = "3 Meals / 4 Snacks"
-      servingSuggestion2.text = "3 Meals / 3 Snacks / 1 Dessert"
-      servingSuggestion3.text = "4 Meals / 2 Snack / 1 Dessert"
+      servingSuggestion1.text = "3 meals / 4 snacks"
+      servingSuggestion2.text = "3 meals / 3 snacks / 2 dessert"
+      servingSuggestion3.text = "4 meals / 2 snacks / 1 dessert"
     } else if dailyCalorieTarget < 2499 {
-      servingSuggestion1.text = "4 Meals / 3 Snacks / 1 Dessert"
-      servingSuggestion2.text = "3 Meals / 4 Snacks / 2 Desserts"
-      servingSuggestion3.text = "3 Meals / 5 Snacks"
+      servingSuggestion1.text = "4 meals / 3 snacks / 1 dessert"
+      servingSuggestion2.text = "3 meals / 4 snacks / 2 2esserts"
+      servingSuggestion3.text = "3 meals / 5 snacks"
     } else if dailyCalorieTarget < 2749 {
-      servingSuggestion1.text = "4 Meals / 4 Snacks / 1 Dessert"
-      servingSuggestion2.text = "5 Meals / 3 Snacks"
-      servingSuggestion3.text = "5 Meals / 2 Snacks / 2 Desserts"
+      servingSuggestion1.text = "4 meals / 4 snacks / 1 dessert"
+      servingSuggestion2.text = "5 meals / 3 snacks"
+      servingSuggestion3.text = "5 meals / 2 snacks / 2 desserts"
     } else if dailyCalorieTarget < 2999 {
-      servingSuggestion1.text = "5 Meals / 3 Snacks / 1 Dessert"
-      servingSuggestion2.text = "6 Meals / 2 Snacks / 2 Desserts"
-      servingSuggestion3.text = "6 Meals / 3 Snacks"
+      servingSuggestion1.text = "5 meals / 3 snacks / 1 dessert"
+      servingSuggestion2.text = "6 meals / 2 snacks / 2 desserts"
+      servingSuggestion3.text = "6 meals / 3 snacks"
     } else {
-      servingSuggestion1.text = "5 Meals / 5 Snacks / 1 Dessert"
-      servingSuggestion2.text = "6 Meals / 4 Snacks"
-      servingSuggestion3.text = "6 Meals / 3 Snacks / 2 Desserts"
+      servingSuggestion1.text = "5 meals / 5 snacks / 1 dessert"
+      servingSuggestion2.text = "6 meals / 4 snacks"
+      servingSuggestion3.text = "6 meals / 3 snacks / 2 desserts"
     }
   }
   @IBAction func resetPressed(_ sender: Any) {

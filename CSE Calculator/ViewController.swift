@@ -146,13 +146,49 @@ class ViewController: UIViewController, UITextFieldDelegate {
       targetFactor = 0.0
       break
     }
-        let dailyCalorieTarget:Float = tdee + (tdee*targetFactor)
-        
+    let dailyCalorieTarget:Float = tdee + (tdee*targetFactor)
+    
+    setHoverViewValues(dailyCalorieTarget)
+      
     resultsView.isHidden = false;
     blackground.isHidden = false;
     hoverView.isHidden = false;
   }
-    @IBAction func resetPressed(_ sender: Any) {
+  func setHoverViewValues(_ dailyCalorieTarget:Float) {
+    result.text = String(dailyCalorieTarget)
+    
+    if dailyCalorieTarget < 1499 {
+      servingSuggestion1.text = "3 Meals / 1 Snack"
+      servingSuggestion2.text = "3 Meals / 2 Desserts"
+    } else if dailyCalorieTarget < 1749 {
+      servingSuggestion1.text = "3 Meals / 2 Snacks"
+      servingSuggestion2.text = "3 Meals / 1 Snack / 2 Desserts"
+    } else if dailyCalorieTarget < 1999 {
+      servingSuggestion1.text = "3 Meals / 3 Snacks"
+      servingSuggestion2.text = "3 Meals / 3 Snacks / 2 Desserts"
+    } else if dailyCalorieTarget < 2249 {
+      servingSuggestion1.text = "3 Meals / 4 Snacks"
+      servingSuggestion2.text = "3 Meals / 3 Snacks / 1 Dessert"
+      servingSuggestion3.text = "4 Meals / 2 Snack / 1 Dessert"
+    } else if dailyCalorieTarget < 2499 {
+      servingSuggestion1.text = "4 Meals / 3 Snacks / 1 Dessert"
+      servingSuggestion2.text = "3 Meals / 4 Snacks / 2 Desserts"
+      servingSuggestion3.text = "3 Meals / 5 Snacks"
+    } else if dailyCalorieTarget < 2749 {
+      servingSuggestion1.text = "4 Meals / 4 Snacks / 1 Dessert"
+      servingSuggestion2.text = "5 Meals / 3 Snacks"
+      servingSuggestion3.text = "5 Meals / 2 Snacks / 2 Desserts"
+    } else if dailyCalorieTarget < 2999 {
+      servingSuggestion1.text = "5 Meals / 3 Snacks / 1 Dessert"
+      servingSuggestion2.text = "6 Meals / 2 Snacks / 2 Desserts"
+      servingSuggestion3.text = "6 Meals / 3 Snacks"
+    } else {
+      servingSuggestion1.text = "5 Meals / 5 Snacks / 1 Dessert"
+      servingSuggestion2.text = "6 Meals / 4 Snacks"
+      servingSuggestion3.text = "6 Meals / 3 Snacks / 2 Desserts"
+    }
+  }
+  @IBAction func resetPressed(_ sender: Any) {
         resultsView.isHidden = true;
         blackground.isHidden = true;
         hoverView.isHidden = true;

@@ -10,7 +10,7 @@
  1.  Calculate BMR (Basal Metabolic Rate)
         Female BMR = 655 + (4.35 * Weight in LBS) + (1.8 * Height in CM) - (4.7 * Age in YRS)
         Male BMR = 66 + (6.23 * Weight in LBS) + (5 * Height in CM) - (6.8 * Age in YRS)
-        ^^^You have to calculate the numbers in paraentheses first^^^
+        ^^^You have to calculate the numbers in parentheses first^^^
  2.  Calculate TDEE (Total Daily Energy Expenditure)
         TDEE = BMR * Activity Factor
             Little to None = 1.2 * BMR
@@ -19,15 +19,17 @@
             Very Active (6-7 days/week) = 1.725 * BMR
             Heavy (2x/day) = 1.9 * BMR
  3.  Calculate and Display Daily Calorie Target Based on Goals
-        Deficit (10-15% below) = TDEE - (TDEE * .125)
-        Deficit (20-25% below) = TDEE - (TDEE * .225)
-        Deficit (30-35% below) = TDEE - (TDEE * .325)
-        Deficit (40%+ below) = TDEE - (TDEE * .4)
+        Deficit (10% below) = TDEE - (TDEE * .1)
+        Deficit (15% below) = TDEE - (TDEE * .15)
+        Deficit (20% below) = TDEE - (TDEE * .2)
+        Deficit (25% below) = TDEE - (TDEE * .25)
+        Deficit (30%+ below) = TDEE - (TDEE * .3)
         Maintain Current Weight = TDEE
-        Surplus (10-15% above) = TDEE + (TDEE * .125)
-        Surplus (20-25% above) = TDEE + (TDEE * .225)
-        Surplus (30-35% above) = TDEE + (TDEE * .325)
-        Surplus (40%+) = TDEE + (TDEE * .4)
+        Surplus (10% above) = TDEE + (TDEE * .1)
+        Surplus (15% above) = TDEE + (TDEE * .15)
+        Surplus (20% above) = TDEE + (TDEE * .2)
+        Surplus (25% above) = TDEE + (TDEE * .25)
+        Surplus (30%+ above) = TDEE + (TDEE * .3)
  4.  Display Servings Suggestions Based on Calorie Target
         if 1250-1499 Calories:
             3 meals / 1 snack
@@ -117,32 +119,38 @@ class ViewController: UIViewController, UITextFieldDelegate {
     var targetFactor:Float = 0.0
     switch(goalIndex){
     case 0:
-      targetFactor = -0.125
+      targetFactor = -0.3
       break
     case 1:
-      targetFactor = -0.225
+      targetFactor = -0.25
       break
     case 2:
-      targetFactor = -0.325
+      targetFactor = -0.2
       break
     case 3:
-      targetFactor = -0.4
+      targetFactor = -0.15
       break
     case 4:
-      targetFactor = 0.0
+      targetFactor = -0.1
       break
     case 5:
-      targetFactor = 0.125
+      targetFactor = 0.0
       break
     case 6:
-      targetFactor = 0.225
+      targetFactor = 0.1
       break
     case 7:
-      targetFactor = 0.325
+      targetFactor = 0.15
       break
     case 8:
-      targetFactor = 0.4
+      targetFactor = 0.2
       break
+    case 9:
+        targetFactor = 0.25
+        break
+    case 10:
+        targetFactor = 0.3
+        break
     default:
       targetFactor = 0.0
       break
@@ -231,7 +239,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         Heavy (2x/day) = 1.9
         */
     
-    let goal = ["Lose Weight (10-15% deficit)", "Lose Weight (20-25% deficit)", "Lose Weight (30-35% deficit)", "Lose Weight (40%+ deficit)", "Maintain Current Weight", "Gain Weight (10-15% surplus)", "Gain Weight (20-25% surplus)", "Gain Weight (30-35% surplus)", "Gain Weight (40%+ surplus)"]
+    let goal = ["Lose Weight (30%+ deficit)", "Lose Weight (25% deficit)", "Lose Weight (20% deficit)", "Lose Weight (15% deficit)", "Lose Weight (10% deficit)", "Maintain Current Weight", "Gain Weight (10% surplus)", "Gain Weight (15% surplus)", "Gain Weight (20% surplus)", "Gain Weight (25% surplus)", "Gain Weight (30%+ surplus)"]
     
     var selectedHeight: String?
     var selectedActivity: String?

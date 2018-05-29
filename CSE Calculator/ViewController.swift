@@ -30,34 +30,34 @@
         Surplus (40%+) = TDEE + (TDEE * .4)
  4.  Display Servings Suggestions Based on Calorie Target
         if 1250-1499 Calories:
-            3 Meals / 1 Snack
-            3 Meals / 2 Desserts
+            3 meals / 1 snack
+            3 meals / 2 power balls
         if 1500-1749 Calories:
-            3 Meals / 2 Snacks
-            3 Meals / 1 Snack / 2 Desserts
+            3 meals / 2 snacks
+            3 meals / 1 snack / 2 power balls
         if 1750-1999 Calories:
-            3 Meals / 3 Snacks
-            3 Meals / 3 Snacks / 2 Desserts
+            3 meals / 3 snacks
+            3 meals / 2 snacks / 2 power balls
         if 2000-2249 Calories:
-            3 Meals / 4 Snacks
-            3 Meals / 3 Snacks / 1 Dessert
-            4 Meals / 2 Snack / 1 Dessert
+            3 meals / 4 snacks
+            3 meals / 3 snacks / 2 power balls
+            4 meals / 2 snack / 1 power ball
         if 2250-2499 Calories:
-            4 Meals / 3 Snacks / 1 Dessert
-            3 Meals / 4 Snacks / 2 Desserts
-            3 Meals / 5 Snacks
+            4 meals / 3 snacks / 1 power ball
+            3 meals / 4 snacks / 2 power balls
+            3 meals / 5 snacks
         if 2500-2749 Calories:
-            4 Meals / 4 Snacks / 1 Dessert
-            5 Meals / 3 Snacks
-            5 Meals / 2 Snacks / 2 Desserts
+            4 meals / 4 snacks / 1 power ball
+            5 meals / 3 snacks
+            5 meals / 2 snacks / 2 power balls
         if 2750-2999 Calories:
-            5 Meals / 3 Snacks / 1 Dessert
-            6 Meals / 2 Snacks / 2 Desserts
-            6 Meals / 3 Snacks
+            5 meals / 3 snacks / 1 power ball
+            6 meals / 2 snacks / 2 power balls
+            6 meals / 3 snacks
         if 3000+ Calories:
-            5 Meals / 5 Snacks / 1 Dessert
-            6 Meals / 4 Snacks
-            6 Meals / 3 Snacks / 2 Desserts
+            5 meals / 5 snacks / 1 dessert
+            6 meals / 4 snacks
+            6 meals / 3 snacks / 2 desserts
  */
 
 import UIKit
@@ -85,6 +85,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBAction func maleFemalePressed(_ sender: UISegmentedControl) {
     }
     @IBAction func calculatePressed(_ sender: Any) {
+    if maleFemale == nil {return;}
     if selectedHeight == nil {return;}
     if selectedGoal == nil {return;}
     if selectedActivity == nil {return;}
@@ -159,36 +160,36 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     if dailyCalorieTarget < 1499 {
       servingSuggestion1.text = "3 meals / 1 snack"
-      servingSuggestion2.text = "3 meals / 2 desserts"
+      servingSuggestion2.text = "3 meals / 2 power balls"
         servingSuggestion3.text = ""
     } else if dailyCalorieTarget < 1749 {
       servingSuggestion1.text = "3 meals / 2 snacks"
-      servingSuggestion2.text = "3 meals / 1 snack / 2 desserts"
+      servingSuggestion2.text = "3 meals / 1 snack / 2 power balls"
         servingSuggestion3.text = ""
     } else if dailyCalorieTarget < 1999 {
       servingSuggestion1.text = "3 meals / 3 snacks"
-      servingSuggestion2.text = "3 meals / 2 snacks / 2 desserts"
+      servingSuggestion2.text = "3 meals / 2 snacks / 2 power balls"
         servingSuggestion3.text = ""
     } else if dailyCalorieTarget < 2249 {
       servingSuggestion1.text = "3 meals / 4 snacks"
-      servingSuggestion2.text = "3 meals / 3 snacks / 2 dessert"
-      servingSuggestion3.text = "4 meals / 2 snacks / 1 dessert"
+      servingSuggestion2.text = "3 meals / 3 snacks / 2 power balls"
+      servingSuggestion3.text = "4 meals / 2 snacks / 1 power ball"
     } else if dailyCalorieTarget < 2499 {
-      servingSuggestion1.text = "4 meals / 3 snacks / 1 dessert"
-      servingSuggestion2.text = "3 meals / 4 snacks / 2 2esserts"
+      servingSuggestion1.text = "4 meals / 3 snacks / 1 power ball"
+      servingSuggestion2.text = "3 meals / 4 snacks / 2 power balls"
       servingSuggestion3.text = "3 meals / 5 snacks"
     } else if dailyCalorieTarget < 2749 {
-      servingSuggestion1.text = "4 meals / 4 snacks / 1 dessert"
+      servingSuggestion1.text = "4 meals / 4 snacks / 1 power ball"
       servingSuggestion2.text = "5 meals / 3 snacks"
-      servingSuggestion3.text = "5 meals / 2 snacks / 2 desserts"
+      servingSuggestion3.text = "5 meals / 2 snacks / 2 power balls"
     } else if dailyCalorieTarget < 2999 {
-      servingSuggestion1.text = "5 meals / 3 snacks / 1 dessert"
-      servingSuggestion2.text = "6 meals / 2 snacks / 2 desserts"
+      servingSuggestion1.text = "5 meals / 3 snacks / 1 power ball"
+      servingSuggestion2.text = "6 meals / 2 snacks / 2 power balls"
       servingSuggestion3.text = "6 meals / 3 snacks"
     } else {
-      servingSuggestion1.text = "5 meals / 5 snacks / 1 dessert"
+      servingSuggestion1.text = "5 meals / 5 snacks / 1 power ball"
       servingSuggestion2.text = "6 meals / 4 snacks"
-      servingSuggestion3.text = "6 meals / 3 snacks / 2 desserts"
+      servingSuggestion3.text = "6 meals / 3 snacks / 2 power balls"
     }
   }
   @IBAction func resetPressed(_ sender: Any) {
@@ -230,7 +231,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         Heavy (2x/day) = 1.9
         */
     
-    let goal = ["Deficit (10-15% below)", "Deficit (20-25% below)", "Deficit (30-35% below)", "Deficit (40%+ below)", "Maintain Current Weight", "Surplus (10-15% above)", "Surplus (20-25% above)", "Surplus (30-35% above)", "Surplus (40%+)"]
+    let goal = ["Lose Weight (10-15% deficit)", "Lose Weight (20-25% deficit)", "Lose Weight (30-35% deficit)", "Lose Weight (40%+ deficit)", "Maintain Current Weight", "Gain Weight (10-15% surplus)", "Gain Weight (20-25% surplus)", "Gain Weight (30-35% surplus)", "Gain Weight (40%+ surplus)"]
     
     var selectedHeight: String?
     var selectedActivity: String?

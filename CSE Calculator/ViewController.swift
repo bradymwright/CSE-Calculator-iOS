@@ -87,7 +87,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBAction func maleFemalePressed(_ sender: UISegmentedControl) {
     }
     @IBAction func calculatePressed(_ sender: Any) {
-    if maleFemale == nil {return;}
+    if maleFemale.selectedSegmentIndex == -1 {return;}
     if selectedHeight == nil {return;}
     if selectedGoal == nil {return;}
     if selectedActivity == nil {return;}
@@ -164,33 +164,39 @@ class ViewController: UIViewController, UITextFieldDelegate {
     hoverView.isHidden = false;
   }
   func setHoverViewValues(_ dailyCalorieTarget:Float) {
-    result.text = String(dailyCalorieTarget)
     
-    if dailyCalorieTarget < 1499 {
+    let largeNumber = Int(dailyCalorieTarget+0.5)
+    let numberFormatter = NumberFormatter()
+    numberFormatter.numberStyle = NumberFormatter.Style.decimal
+    let formattedNumber = numberFormatter.string(from: NSNumber(value:largeNumber))
+    
+    result.text = formattedNumber
+    
+    if largeNumber < 1499 {
       servingSuggestion1.text = "3 meals / 1 snack"
       servingSuggestion2.text = "3 meals / 2 power balls"
         servingSuggestion3.text = ""
-    } else if dailyCalorieTarget < 1749 {
+    } else if largeNumber < 1749 {
       servingSuggestion1.text = "3 meals / 2 snacks"
       servingSuggestion2.text = "3 meals / 1 snack / 2 power balls"
         servingSuggestion3.text = ""
-    } else if dailyCalorieTarget < 1999 {
+    } else if largeNumber < 1999 {
       servingSuggestion1.text = "3 meals / 3 snacks"
       servingSuggestion2.text = "3 meals / 2 snacks / 2 power balls"
         servingSuggestion3.text = ""
-    } else if dailyCalorieTarget < 2249 {
+    } else if largeNumber < 2249 {
       servingSuggestion1.text = "3 meals / 4 snacks"
       servingSuggestion2.text = "3 meals / 3 snacks / 2 power balls"
       servingSuggestion3.text = "4 meals / 2 snacks / 1 power ball"
-    } else if dailyCalorieTarget < 2499 {
+    } else if largeNumber < 2499 {
       servingSuggestion1.text = "4 meals / 3 snacks / 1 power ball"
       servingSuggestion2.text = "3 meals / 4 snacks / 2 power balls"
       servingSuggestion3.text = "3 meals / 5 snacks"
-    } else if dailyCalorieTarget < 2749 {
+    } else if largeNumber < 2749 {
       servingSuggestion1.text = "4 meals / 4 snacks / 1 power ball"
       servingSuggestion2.text = "5 meals / 3 snacks"
       servingSuggestion3.text = "5 meals / 2 snacks / 2 power balls"
-    } else if dailyCalorieTarget < 2999 {
+    } else if largeNumber < 2999 {
       servingSuggestion1.text = "5 meals / 3 snacks / 1 power ball"
       servingSuggestion2.text = "6 meals / 2 snacks / 2 power balls"
       servingSuggestion3.text = "6 meals / 3 snacks"
@@ -282,9 +288,12 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         heightTextField.inputView = heightPicker
         heightTextField.parent = self
+        heightTextField.delegate = heightTextField
         
         //Customizations
         heightPicker.backgroundColor = .white
+      
+        heightPicker.selectRow(height.index(of: "5' 6\"")!, inComponent:0, animated:true)
     }
     
     
@@ -295,8 +304,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
      
         activityLevelTextField.inputView = activityPicker
         activityLevelTextField.parent = self
+        activityLevelTextField.delegate = activityLevelTextField
       
         activityPicker.backgroundColor = .white
+        activityPicker.selectRow(activity.index(of: "Active (3-5 days/week)")!, inComponent:0, animated:true)
      }
   
   func createGoalPicker() {
@@ -305,8 +316,12 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     goalTextField.inputView = goalPicker
     goalTextField.parent = self
+    goalTextField.delegate = goalTextField
+
     
     goalPicker.backgroundColor = .white
+    goalPicker.selectRow(goal.index(of: "Maintain Current Weight")!, inComponent:0, animated:true)
+
   }
      
     
@@ -337,8 +352,14 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
 }
 
-class HeightTextField : UITextField, UIPickerViewDelegate, UIPickerViewDataSource{
+class HeightTextField : UITextField, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
   var parent: ViewController?
+  func textFieldDidBeginEditing(_ textField: UITextField) {
+    let picker = textField.inputView as! UIPickerView
+    let row = picker.selectedRow(inComponent: 0)
+    parent?.selectedHeight = parent!.height[row]
+    textField.text = parent?.selectedHeight
+  }
   func numberOfComponents(in pickerView: UIPickerView) -> Int {
     return 1
   }
@@ -357,8 +378,14 @@ class HeightTextField : UITextField, UIPickerViewDelegate, UIPickerViewDataSourc
   }
 }
 
-class ActivityTextField : UITextField, UIPickerViewDelegate, UIPickerViewDataSource{
+class ActivityTextField : UITextField, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate{
   var parent: ViewController?
+  func textFieldDidBeginEditing(_ textField: UITextField) {
+    let picker = textField.inputView as! UIPickerView
+    let row = picker.selectedRow(inComponent: 0)
+    parent?.selectedActivity = parent!.activity[row]
+    textField.text = parent?.selectedActivity
+  }
   func numberOfComponents(in pickerView: UIPickerView) -> Int {
     return 1
   }
@@ -377,8 +404,14 @@ class ActivityTextField : UITextField, UIPickerViewDelegate, UIPickerViewDataSou
   }
 }
 
-class GoalTextField : UITextField, UIPickerViewDelegate, UIPickerViewDataSource{
+class GoalTextField : UITextField, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate{
   var parent: ViewController?
+  func textFieldDidBeginEditing(_ textField: UITextField) {
+    let picker = textField.inputView as! UIPickerView
+    let row = picker.selectedRow(inComponent: 0)
+    parent?.selectedGoal = parent!.goal[row]
+    textField.text = parent?.selectedGoal
+  }
   func numberOfComponents(in pickerView: UIPickerView) -> Int {
     return 1
   }

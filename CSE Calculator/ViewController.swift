@@ -19,17 +19,14 @@
             5-6 days/week = 1.575 * BMR
             7 days = 1.7 * BMR
  3.  Calculate and Display Daily Calorie Target Based on Goals
-        Deficit (10% below) = TDEE - (TDEE * .1)
-        Deficit (15% below) = TDEE - (TDEE * .15)
-        Deficit (20% below) = TDEE - (TDEE * .2)
-        Deficit (25% below) = TDEE - (TDEE * .25)
-        Deficit (30%+ below) = TDEE - (TDEE * .3)
+        Weight Loss (10% below) = TDEE - (TDEE * .1)
+        Weight Loss (15% below) = TDEE - (TDEE * .15)
+        Weight Loss (20% below) = TDEE - (TDEE * .2)
+        Weight Loss (25% below) = TDEE - (TDEE * .25)
+        Weight Loss (30%+ below) = TDEE - (TDEE * .3)
         Maintain Current Weight = TDEE
-        Surplus (10% above) = TDEE + (TDEE * .1)
-        Surplus (15% above) = TDEE + (TDEE * .15)
-        Surplus (20% above) = TDEE + (TDEE * .2)
-        Surplus (25% above) = TDEE + (TDEE * .25)
-        Surplus (30%+ above) = TDEE + (TDEE * .3)
+        Weight Gain (10% above) = TDEE + (TDEE * .1)
+        Weight Gain (15%+ above) = TDEE + (TDEE * .15)
  4.  Display Servings Suggestions Based on Calorie Target
         if 1250-1499 Calories:
             3 meals / 1 snack
@@ -142,15 +139,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
     case 7:
       targetFactor = 0.15
       break
-    case 8:
-      targetFactor = 0.2
-      break
-    case 9:
-        targetFactor = 0.25
-        break
-    case 10:
-        targetFactor = 0.3
-        break
     default:
       targetFactor = 0.0
       break
@@ -245,7 +233,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         Heavy (2x/day) = 1.9
         */
     
-    let goal = ["Weight Loss (30%+ deficit)", "Weight Loss (25% deficit)", "Weight Loss (20% deficit)", "Weight Loss (15% deficit)", "Weight Loss (10% deficit)", "Maintain Current Weight", "Weight Gain (10% surplus)", "Weight Gain (15% surplus)", "Weight Gain (20% surplus)", "Weight Gain (25% surplus)", "Weight Gain (30%+ surplus)"]
+    let goal = ["Weight Loss (30%+ deficit)", "Weight Loss (25% deficit)", "Weight Loss (20% deficit)", "Weight Loss (15% deficit)", "Weight Loss (10% deficit)", "Maintain Current Weight", "Weight Gain (10% surplus)", "Weight Gain (15%+ surplus)"]
     
     var selectedHeight: String?
     var selectedActivity: String?
@@ -307,7 +295,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         activityLevelTextField.delegate = activityLevelTextField
       
         activityPicker.backgroundColor = .white
-        activityPicker.selectRow(activity.index(of: "3-4 Days")!, inComponent:0, animated:true)
+        activityPicker.selectRow(activity.index(of: "3-4 Days/Week")!, inComponent:0, animated:true)
      }
   
   func createGoalPicker() {

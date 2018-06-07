@@ -13,11 +13,11 @@
         ^^^You have to calculate the numbers in parentheses first^^^
  2.  Calculate TDEE (Total Daily Energy Expenditure)
         TDEE = BMR * Activity Factor
-            Little to None = 1.2 * BMR
-            Light (1-2 days/week) = 1.375 * BMR
-            Active (3-5 days/week) = 1.55 * BMR
-            Very Active (6-7 days/week) = 1.725 * BMR
-            Heavy (2x/day) = 1.9 * BMR
+            0 Days = 1.2 * BMR
+            1-2 days/week = 1.325 * BMR
+            3-4 days/week = 1.45 * BMR
+            5-6 days/week = 1.575 * BMR
+            7 days = 1.7 * BMR
  3.  Calculate and Display Daily Calorie Target Based on Goals
         Deficit (10% below) = TDEE - (TDEE * .1)
         Deficit (15% below) = TDEE - (TDEE * .15)
@@ -235,7 +235,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         ETC, ETC, ETC...
         */
     
-    let activity = ["0 Days...I Don't Exercise :/", "1-2 Days", "3-4 Days", "5-6 Days", "7 Days"]
+    let activity = ["0 Days (I Don't Exercise)", "1-2 Days/Week", "3-4 Days/Week", "5-6 Days/Week", "7 Days/Week"]
     
         /*MARK: Activity Conversions
         Little to None = 1.2

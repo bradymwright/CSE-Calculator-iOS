@@ -17,7 +17,7 @@
             1-2 days/week = 1.325 * BMR
             3-4 days/week = 1.45 * BMR
             5-6 days/week = 1.575 * BMR
-            7 days = 1.7 * BMR
+            7 days/week = 1.7 * BMR
  3.  Calculate and Display Daily Calorie Target Based on Goals
         Weight Loss (10% below) = TDEE - (TDEE * .1)
         Weight Loss (15% below) = TDEE - (TDEE * .15)

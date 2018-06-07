@@ -96,7 +96,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
 
     //use these numbers for daily target view
     let heightCM = 2.54 * Float(48+height.index(of: selectedHeight!)!)
-    let activityFactor = 1.2 + (0.175 * Float(activity.index(of: selectedActivity!)!))
+    let activityFactor = 1.2 + (0.125 * Float(activity.index(of: selectedActivity!)!))
     var bmr:Float = 0.0
     if maleFemale.selectedSegmentIndex == 0 {//male
       //Male BMR = 66 + (6.23 * Weight in LBS) + (5 * Height in CM) - (6.8 * Age in YRS)
@@ -235,7 +235,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         ETC, ETC, ETC...
         */
     
-    let activity = ["Little to None", "Light (1-2 days/week)", "Active (3-5 days/week)", "Very Active (6-7 days/week)", "Heavy (2x/day)"]
+    let activity = ["0 Days...I Don't Exercise :/", "1-2 Days", "3-4 Days", "5-6 Days", "7 Days"]
     
         /*MARK: Activity Conversions
         Little to None = 1.2
@@ -245,7 +245,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         Heavy (2x/day) = 1.9
         */
     
-    let goal = ["Lose Weight (30%+ deficit)", "Lose Weight (25% deficit)", "Lose Weight (20% deficit)", "Lose Weight (15% deficit)", "Lose Weight (10% deficit)", "Maintain Current Weight", "Gain Weight (10% surplus)", "Gain Weight (15% surplus)", "Gain Weight (20% surplus)", "Gain Weight (25% surplus)", "Gain Weight (30%+ surplus)"]
+    let goal = ["Weight Loss (30%+ deficit)", "Weight Loss (25% deficit)", "Weight Loss (20% deficit)", "Weight Loss (15% deficit)", "Weight Loss (10% deficit)", "Maintain Current Weight", "Weight Gain (10% surplus)", "Weight Gain (15% surplus)", "Weight Gain (20% surplus)", "Weight Gain (25% surplus)", "Weight Gain (30%+ surplus)"]
     
     var selectedHeight: String?
     var selectedActivity: String?
@@ -307,7 +307,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         activityLevelTextField.delegate = activityLevelTextField
       
         activityPicker.backgroundColor = .white
-        activityPicker.selectRow(activity.index(of: "Active (3-5 days/week)")!, inComponent:0, animated:true)
+        activityPicker.selectRow(activity.index(of: "3-4 Days")!, inComponent:0, animated:true)
      }
   
   func createGoalPicker() {
